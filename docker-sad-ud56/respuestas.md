@@ -10,15 +10,15 @@
 
 2. En tu regla de la inyección SQL pusiste el destino `any` y no `$HOME_NET`. ¿Por qué? (pista: el DNAT del firewall).
 
->
+>Se usa basicamente para evitar que el atacante sea dirigido directamente y no toque ni de casualidad la $HOME_NET.
 
 3. El WAF está en `DetectionOnly` y llega `?id=1' OR '1'='1`. ¿Qué código recibe el atacante? ¿Dónde queda apuntado?
 
->
+>El atacante recibe la respuesta de la web, porque en modo DetectionOnly el WAF no bloquea ni devuelve 403 Forbidden. Queda apuntado en los registros (logs) del WAF (como el log de auditoría/error de ModSecurity), donde queda registrada la alerta de la regla disparada por el payload SQLi.
 
 4. El WAF bloquea el comentario de una clienta. ¿Qué nombre tiene ese problema? ¿Cómo lo arreglaste **sin** abrir la puerta a toda la web?
 
->
+>Ese problema se llama falso positivo .Para arreglarlo poniamos una regla que los tipo comentarios no se los bloquee, manteniendo el resto de reglas y rutas protegidas.
 
 ## UD6 · Bastionado
 
